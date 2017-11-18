@@ -9,6 +9,16 @@ import scrapy
 
 
 class JobsbrowserItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    url = scrapy.Field()
+    timestamp = scrapy.Field()
+    raw_html = scrapy.Field()
+
+
+class PracujItem(JobsbrowserItem):
+    offer_id = scrapy.Field()
+    date_posted = scrapy.Field()
+    valid_through = scrapy.Field()
+    employer = scrapy.Field()
+    job_title = scrapy.Field()
+    job_location = scrapy.Field()
+    job_description = scrapy.Field()
