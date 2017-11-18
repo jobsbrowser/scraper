@@ -35,8 +35,14 @@ class PracujSpider(CrawlSpider):
     )
 
     def __init__(self, *args, **kwargs):
-        self.already_parsed_links = self._get_already_parsed_links()
         super().__init__(*args, **kwargs)
+        self._already_parsed_links = None
+
+    @property
+    def already_parsed_links(self):
+        if self._already_parsed_links is None:
+            self._already_parsed_links = self._get_already_parsed_links()
+        return self._already_parsed_links
 
     def filter_links(self, links):
         self.logger.debug(f"Before filter: {len(links)} links")
