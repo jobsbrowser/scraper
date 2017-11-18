@@ -32,7 +32,6 @@ class PracujSpider(CrawlSpider):
     )
 
     def parse_item(self, response):
-        self.logger.info('STARTING parsing item')
         date_regexp = r'\d+.\d+.\d+'
         location_regexp = r'.+,\s*[\w-]+'
         pracuj_item = PracujItemLoader(item=PracujItem(), response=response)
