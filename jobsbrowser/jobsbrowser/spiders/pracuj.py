@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
+import requests
+from requests.exceptions import ConnectionError
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import (
     CrawlSpider,
@@ -28,10 +30,23 @@ class PracujSpider(CrawlSpider):
                 restrict_css='#mainOfferList a[itemprop="title"]',
             ),
             callback='parse_item',
+            process_links='filter_links',
         ),
     )
 
+    def __init__(self, *args, **kwargs):
+        self.already_parsed_links = self._get_already_parsed_links()
+        super().__init__(*args, **kwargs)
+
+    def filter_links(self, links):
+        self.logger.debug(f"Before filter: {len(links)} links")
+        result = [link for link in links
+                  if link.url not in self.already_parsed_links]
+        self.logger.debug(f"After filter: {len(result)} links")
+        return result
+
     def parse_item(self, response):
+        self.logger.debug(f"Parsing item: {response.url}")
         date_regexp = r'\d+.\d+.\d+'
         location_regexp = r'.+,\s*[\w-]+'
         pracuj_item = PracujItemLoader(item=PracujItem(), response=response)
@@ -79,3 +94,23 @@ class PracujSpider(CrawlSpider):
             '#description',
         )
         return pracuj_item.load_item()
+
+    def _get_already_parsed_links(self):
+        links = set()
+        try:
+            response = requests.get(
+                self.settings['STORAGE_SERVICE_RETRIEVE_URL']
+            )
+            links = set(response.json()["links"])
+        except ConnectionError:
+            self.logger.warning(
+                "Couldn't connect to storage service to retrieve "
+                "parsed offers. All available offers will be parsed."
+            )
+        except (KeyError, TypeError, ValueError):
+            self.logger.warning(
+                "Storage service returned response that can't be used. "
+                "All available offers will be parsed."
+            )
+        finally:
+            return links

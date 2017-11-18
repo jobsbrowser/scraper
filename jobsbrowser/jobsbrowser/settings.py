@@ -57,8 +57,6 @@ ITEM_PIPELINES = {
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-# Celery Broker
-CELERY_BROKER = "pyamqp://guest@localhost//"
-
 # Storage
-STORAGE_SERVICE_URL = "http://138.68.66.216:7000/add"
+STORAGE_SERVICE_ADD_URL = "http://138.68.66.216:7000/add"
+STORAGE_SERVICE_RETRIEVE_URL = "http://138.68.66.216:7000/add"
