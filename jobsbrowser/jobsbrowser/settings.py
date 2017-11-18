@@ -14,7 +14,6 @@ BOT_NAME = 'jobsbrowser'
 SPIDER_MODULES = ['jobsbrowser.spiders']
 NEWSPIDER_MODULE = 'jobsbrowser.spiders'
 
-
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # SER_AGENT = 'jobsbrowser (+http://www.yourdomain.com)'
 
@@ -42,31 +41,31 @@ ROBOTSTXT_OBEY = True
 # EFAULT_REQUEST_HEADERS = {
 #   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
 #   'Accept-Language': 'en',
-#}
+# }
 
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 # PIDER_MIDDLEWARES = {
 #    'jobsbrowser.middlewares.JobsbrowserSpiderMiddleware': 543,
-#}
+# }
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 # OWNLOADER_MIDDLEWARES = {
 #    'jobsbrowser.middlewares.MyCustomDownloaderMiddleware': 543,
-#}
+# }
 
 # Enable or disable extensions
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
 # XTENSIONS = {
 #    'scrapy.extensions.telnet.TelnetConsole': None,
-#}
+# }
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 # TEM_PIPELINES = {
 #    'jobsbrowser.pipelines.JobsbrowserPipeline': 300,
-#}
+# }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html

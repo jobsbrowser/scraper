@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
-import scrapy
-
+from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import (
     CrawlSpider,
     Rule,
 )
-from scrapy.linkextractors import LinkExtractor
 
 from jobsbrowser.items import PracujItem
 from jobsbrowser.loaders import PracujItemLoader
@@ -19,18 +17,18 @@ class PracujSpider(CrawlSpider):
     start_urls = ['http://pracuj.pl/praca?cc=5013%2c5015%2c5016']
 
     rules = (
-            # following pagination
-            Rule(LinkExtractor(restrict_css=(
-                '.desktopPagin_item:last-child:not(.current)'
-                '> a.desktopPagin_item_link'),
-            )),
-            # following job offers
-            Rule(
-                LinkExtractor(
-                    restrict_css='#mainOfferList a[itemprop="title"]',
-                ),
-                callback='parse_item',
+        # following pagination
+        Rule(LinkExtractor(restrict_css=(
+            '.desktopPagin_item:last-child:not(.current)'
+            '> a.desktopPagin_item_link'),
+        )),
+        # following job offers
+        Rule(
+            LinkExtractor(
+                restrict_css='#mainOfferList a[itemprop="title"]',
             ),
+            callback='parse_item',
+        ),
     )
 
     def parse_item(self, response):

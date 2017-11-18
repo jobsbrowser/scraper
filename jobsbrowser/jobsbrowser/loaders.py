@@ -1,12 +1,9 @@
-import scrapy
-
-from w3lib.html import remove_tags
-
 from scrapy.loader import ItemLoader
 from scrapy.loader.processors import (
     MapCompose,
     TakeFirst,
 )
+from w3lib.html import remove_tags
 
 
 class PracujItemLoader(ItemLoader):
