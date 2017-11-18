@@ -1,2 +1,3 @@
 Scrapy==1.4.0
 celery==4.1.0
+requests==2.18.4

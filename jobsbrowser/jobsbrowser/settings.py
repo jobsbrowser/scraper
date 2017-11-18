@@ -59,3 +59,6 @@ ITEM_PIPELINES = {
 
 # Celery Broker
 CELERY_BROKER = "pyamqp://guest@localhost//"
+
+# Storage
+STORAGE_SERVICE_URL = "http://138.68.66.216:7000/add"
