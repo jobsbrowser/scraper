@@ -42,7 +42,8 @@ class PracujSpider(CrawlSpider):
     @property
     def logger(self):
         logger = super().logger
-        coloredlogs.install(logger=logger.logger)
+        coloredlogs.install(
+            level=self.settings['LOG_LEVEL'], logger=logger.logger)
         return logger
 
     @property
