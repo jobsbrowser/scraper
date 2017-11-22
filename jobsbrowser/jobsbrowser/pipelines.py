@@ -13,7 +13,7 @@ class JobsbrowserPipeline(object):
     def process_item(self, item, spider):
         offer_id = item['offer_id']
         spider.logger.info(
-            f"Sending item {offer_id} to storage service")
+            f"Offer {offer_id} scraped. Sending to storage service...")
         try:
             r = requests.post(
                 spider.settings["STORAGE_SERVICE_ADD_URL"], data=dict(item)

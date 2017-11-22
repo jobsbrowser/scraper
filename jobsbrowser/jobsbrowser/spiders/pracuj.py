@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
+import coloredlogs
 import requests
 from requests.exceptions import ConnectionError
 from scrapy.linkextractors import LinkExtractor
@@ -37,6 +38,12 @@ class PracujSpider(CrawlSpider):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._already_parsed_links = None
+
+    @property
+    def logger(self):
+        logger = super().logger
+        coloredlogs.install(logger=logger.logger)
+        return logger
 
     @property
     def already_parsed_links(self):
