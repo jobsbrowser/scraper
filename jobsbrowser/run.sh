@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-scrapy crawl pracuj --loglevel=INFO
+scrapy crawl pracuj --loglevel=INFO $@
 
