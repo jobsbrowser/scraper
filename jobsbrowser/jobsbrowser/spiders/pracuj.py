@@ -72,9 +72,9 @@ class PracujSpider(CrawlSpider):
             'timestamp',
             str(datetime.utcnow()),
         )
-        pracuj_item.add_value(
+        pracuj_item.add_css(
             'raw_html',
-            response.body_as_unicode(),
+            '#offer',
         )
         pracuj_item.add_value(
             'offer_id',
@@ -82,17 +82,17 @@ class PracujSpider(CrawlSpider):
         )
         pracuj_item.add_css(
             'date_posted',
-            'span[itemprop="datePosted"]',
+            '[itemprop="datePosted"]',
             re=date_regexp,
         )
         pracuj_item.add_css(
             'valid_through',
-            'span[itemprop="validThrough"]',
+            '[itemprop="validThrough"]',
             re=date_regexp,
         )
         pracuj_item.add_css(
             'employer',
-            'h2[itemprop="hiringOrganization"]',
+            '[itemprop="hiringOrganization"]',
         )
         pracuj_item.add_css(
             'job_title',
@@ -105,7 +105,15 @@ class PracujSpider(CrawlSpider):
         )
         pracuj_item.add_css(
             'job_description',
-            '#description',
+            '[itemprop="description"]',
+        )
+        pracuj_item.add_css(
+            'job_benefits',
+            '[itemprop="benefits"]',
+        )
+        pracuj_item.add_css(
+            'job_qualifications',
+            '[itemprop="qualifications"]',
         )
         return pracuj_item.load_item()
 

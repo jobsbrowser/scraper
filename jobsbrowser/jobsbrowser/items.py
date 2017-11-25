@@ -21,3 +21,5 @@ class PracujItem(JobsbrowserItem):
     job_title = scrapy.Field()
     job_location = scrapy.Field()
     job_description = scrapy.Field()
+    job_benefits = scrapy.Field()
+    job_qualifications = scrapy.Field()
