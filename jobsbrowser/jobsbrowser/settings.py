@@ -63,3 +63,7 @@ ITEM_PIPELINES = {
 # Storage
 STORAGE_SERVICE_ADD_URL = "http://138.68.66.216:7000/add"
 STORAGE_SERVICE_RETRIEVE_URL = "http://138.68.66.216:7000/add"
+
+# Date format
+INPUT_DATE_FORMATS = ['%Y-%m-%d', '%d.%m.%Y']
+OUTPUT_DATE_FORMAT = '%d.%m.%Y'

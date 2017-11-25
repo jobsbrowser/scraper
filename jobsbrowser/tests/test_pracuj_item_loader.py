@@ -1,15 +1,37 @@
 import pytest
 
 from jobsbrowser.items import PracujItem
-from jobsbrowser.loaders import PracujItemLoader
+from jobsbrowser.loaders import (
+    parse_date,
+    PracujItemLoader,
+)
+
+
+@pytest.mark.parametrize('date_string', [
+    '12,12,2017',
+    '12$12$2017',
+    '10.2017',
+    '13/10/2017',
+])
+def test_parse_date_raise_value_error_for_unknown_format(date_string):
+    with pytest.raises(ValueError):
+        parse_date(date_string)
+
+
+@pytest.mark.parametrize('date_string, expected', [
+    ('12.12.2017', '12.12.2017'),
+    ('2017-06-12', '12.06.2017'),
+])
+def test_parse_date_return_date_in_proper_format(date_string, expected):
+        assert parse_date(date_string) == expected
 
 
 class TestPracujItemLoader:
     @pytest.mark.parametrize('item_dict', [
         {
             'url': ['http://spam.egg'],
-            'date_posted': ['2017-09-31'],
-            'valid_through': ['2017-09-31'],
+            'date_posted': ['2017-09-01'],
+            'valid_through': ['2017-09-30'],
             'job_description': ['<b>Hello World</b>'],
         },
     ])
@@ -46,6 +68,22 @@ class TestPracujItemLoader:
         ),
     ])
     def test_remove_html_tags_from_employer_and_job_title_fields(
+        self, item_dict, expected,
+    ):
+        result = self._pracuj_item_loader_from(**item_dict).load_item()
+        assert {k: v for k, v in result.items() if k in expected} == expected
+
+    @pytest.mark.parametrize('item_dict, expected', [
+        (
+            {'employer': ['Spam'], 'date_posted': ['10.10.2017']},
+            {'employer': 'Spam', 'date_posted': '10.10.2017'}
+        ),
+        (
+            {'valid_through': ['2014-11-20']},
+            {'valid_through': '20.11.2014'}
+        )
+    ])
+    def test_unify_date_in_date_posted_and_valid_through_fields(
         self, item_dict, expected,
     ):
         result = self._pracuj_item_loader_from(**item_dict).load_item()
