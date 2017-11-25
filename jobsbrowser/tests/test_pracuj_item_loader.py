@@ -19,8 +19,8 @@ def test_parse_date_raise_value_error_for_unknown_format(date_string):
 
 
 @pytest.mark.parametrize('date_string, expected', [
-    ('12.12.2017', '12.12.2017'),
-    ('2017-06-12', '12.06.2017'),
+    ('12.12.2017', '2017-12-12'),
+    ('2017-06-12', '2017-06-12'),
 ])
 def test_parse_date_return_date_in_proper_format(date_string, expected):
         assert parse_date(date_string) == expected
@@ -75,12 +75,12 @@ class TestPracujItemLoader:
 
     @pytest.mark.parametrize('item_dict, expected', [
         (
-            {'employer': ['Spam'], 'date_posted': ['10.10.2017']},
-            {'employer': 'Spam', 'date_posted': '10.10.2017'}
+            {'employer': ['Spam'], 'date_posted': ['22.10.2017']},
+            {'employer': 'Spam', 'date_posted': '2017-10-22'}
         ),
         (
             {'valid_through': ['2014-11-20']},
-            {'valid_through': '20.11.2014'}
+            {'valid_through': '2014-11-20'}
         )
     ])
     def test_unify_date_in_date_posted_and_valid_through_fields(
