@@ -61,9 +61,31 @@ ITEM_PIPELINES = {
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 # Storage
-STORAGE_SERVICE_ADD_URL = "http://138.68.66.216:7000/add"
-STORAGE_SERVICE_RETRIEVE_URL = "http://138.68.66.216:7000/add"
+STORAGE_SERVICE_ADD_URL = 'http://138.68.66.216:7000/add'
+STORAGE_SERVICE_RETRIEVE_URL = 'http://138.68.66.216:7000/add'
 
 # Date format
 INPUT_DATE_FORMATS = ['%Y-%m-%d', '%d.%m.%Y']
 OUTPUT_DATE_FORMAT = '%Y-%m-%d'
+
+# Pracuj spider settings
+PRACUJ_OFFERS_FROM_LAST_N_DAYS = None
+PRACUJ_CATEGORIES = {
+    '5015001': 'Administrowanie bazami danych i storage',
+    '5015002': 'Administrowanie sieciami',
+    '5015003': 'Administrowanie systemami',
+    '5015004': 'Bezpieczeństwo / Audyt',
+    '5015005': 'Wdrożenia ERP',
+    '5015006': 'Wsparcie techniczne / Helpdesk',
+    '5015007': 'Zarządzanie usługami',
+    '5016001': 'Analiza biznesowa',
+    '5016002': 'Architektura',
+    '5016003': 'Programowanie',
+    '5016004': 'Testowanie',
+    '5016005': 'Zarządzanie projektem',
+    '5013001': 'E-marketing / SEM / SEO',
+    '5013002': 'Media społecznościowe',
+    '5013003': 'Projektowanie',
+    '5013004': 'Sprzedaż / e-Commerce',
+    '5013005': 'Tworzenie stron WWW / Technologie internetowe',
+}

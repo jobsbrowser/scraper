@@ -3,6 +3,7 @@ import contextlib
 from unittest import mock
 
 from scrapy import signals
+from scrapy.http import Request
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 
@@ -38,6 +39,9 @@ class TestPracujSpider:
             PracujSpider,
             allowed_domains=['spam.egg'],
             start_urls=['http://spam.egg/beacon'],
+            start_requests=lambda self: [
+                Request(self.start_urls[0], dont_filter=True),
+            ],
         ) as spider_class_with_invalid_url:
             crawler, *_ = self._start_crawling(spider_class_with_invalid_url)
             stats = crawler.stats

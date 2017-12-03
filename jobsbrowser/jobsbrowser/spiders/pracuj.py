@@ -1,14 +1,15 @@
-# -*- coding: utf-8 -*-
 from datetime import datetime
 
 import coloredlogs
 import requests
+
 from requests.exceptions import ConnectionError
-from scrapy.linkextractors import LinkExtractor
+from scrapy.http import Request
 from scrapy.spiders import (
     CrawlSpider,
     Rule,
 )
+from scrapy.linkextractors import LinkExtractor
 
 from jobsbrowser.items import PracujItem
 from jobsbrowser.loaders import PracujItemLoader
@@ -17,7 +18,7 @@ from jobsbrowser.loaders import PracujItemLoader
 class PracujSpider(CrawlSpider):
     name = 'pracuj'
     allowed_domains = ['pracuj.pl']
-    start_urls = ['http://pracuj.pl/praca?cc=5013%2c5015%2c5016']
+    start_urls = list()
 
     rules = (
         # following pagination
@@ -52,6 +53,27 @@ class PracujSpider(CrawlSpider):
             self._already_parsed_links = self._get_already_parsed_links()
         return self._already_parsed_links
 
+    def start_requests(self):
+        """Create start_urls and yield requests to them.
+
+        Add `category_id` to `request.meta` dictionary.
+        `category_id` is passed down in `_requests_to_follow`
+        method to each new request.
+        """
+
+        url_template = 'http://pracuj.pl/praca?cc={category_id}'
+        offers_last_days = self.settings.get('PRACUJ_OFFERS_FROM_LAST_N_DAYS')
+        if offers_last_days:
+            url = f'{url_template}&p={offers_last_days}'
+        for category_id in self.settings['PRACUJ_CATEGORIES']:
+            url = url_template.format(category_id=category_id)
+            self.start_urls.append(url)
+            yield Request(
+                url,
+                dont_filter=True,
+                meta={'category_id': category_id},
+            )
+
     def filter_links(self, links):
         self.logger.debug(f"Before filter: {len(links)} links")
         result = [link for link in links
@@ -71,6 +93,10 @@ class PracujSpider(CrawlSpider):
         pracuj_item.add_value(
             'timestamp',
             str(datetime.utcnow()),
+        )
+        pracuj_item.add_value(
+            'category_name',
+            self.settings['PRACUJ_CATEGORIES'][response.meta['category_id']],
         )
         pracuj_item.add_css(
             'raw_html',
@@ -136,3 +162,11 @@ class PracujSpider(CrawlSpider):
             )
         finally:
             return links
+
+    def _requests_to_follow(self, response):
+        for request in super()._requests_to_follow(response):
+            request.meta.setdefault(
+                'category_id',
+                response.meta['category_id'],
+            )
+            yield request
