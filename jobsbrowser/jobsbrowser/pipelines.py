@@ -16,7 +16,7 @@ class JobsbrowserPipeline(object):
             f"Offer {offer_id} scraped. Sending to storage service...")
         try:
             r = requests.post(
-                spider.settings["STORAGE_SERVICE_ADD_URL"], data=dict(item)
+                spider.settings["STORAGE_SERVICE_ADD_URL"], json=dict(item)
             )
         except ConnectionError:
             spider.logger.warning(
