@@ -23,8 +23,8 @@ class PracujSpider(CrawlSpider):
     rules = (
         # following pagination
         Rule(LinkExtractor(restrict_css=(
-            '.desktopPagin_item:last-child:not(.current)'
-            '> a.desktopPagin_item_link'),
+            '.pager_item--next'
+            '> a.pager_item_link'),
         )),
         # following job offers
         Rule(
