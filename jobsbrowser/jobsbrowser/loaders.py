@@ -38,3 +38,4 @@ class PracujItemLoader(ItemLoader):
     job_title_in = MapCompose(remove_tags)
     valid_through_in = MapCompose(parse_date)
     date_posted_in = MapCompose(parse_date)
+    categories_out = MapCompose(lambda x: [x])

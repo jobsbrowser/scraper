@@ -16,7 +16,7 @@ class JobsbrowserItem(scrapy.Item):
 class PracujItem(JobsbrowserItem):
     offer_id = scrapy.Field()
     date_posted = scrapy.Field()
-    category_name = scrapy.Field()
+    categories = scrapy.Field()
     valid_through = scrapy.Field()
     employer = scrapy.Field()
     job_title = scrapy.Field()

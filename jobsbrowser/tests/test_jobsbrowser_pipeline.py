@@ -19,6 +19,7 @@ def fake_item():
         job_title='Spam Programmer',
         job_location='Warszawa, mazowieckie',
         job_description='<b>Hello World</b>',
+        categories=['Programowanie'],
     )
 
 
@@ -41,5 +42,5 @@ def test_jobsbrowser_pipeline_process_item_send_request_to_db_module(
         jobsbrowser_pipeline.process_item(fake_item, spider)
         post_mock.assert_called_once_with(
             spider.settings.get('STORAGE_SERVICE_ADD_URL'),
-            data=dict(fake_item),
+            json=dict(fake_item),
         )
