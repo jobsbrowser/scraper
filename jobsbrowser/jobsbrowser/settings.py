@@ -63,6 +63,7 @@ ITEM_PIPELINES = {
 # Storage
 STORAGE_SERVICE_ADD_URL = 'http://localhost:5000/offers'
 STORAGE_SERVICE_RETRIEVE_URL = 'http://localhost:5000/offers'
+STORAGE_SERVICE_UPDATE_URL = 'http://localhost:5000/offers'
 
 # Date format
 INPUT_DATE_FORMATS = ['%Y-%m-%d', '%d.%m.%Y']

@@ -94,7 +94,7 @@ class PracujSpider(CrawlSpider):
             self.logger.debug(f'Updating categories of offer: {link}.')
             try:
                 requests.put(
-                    self.settings['STORAGE_SERVICE_UPDATE_OFFER'],
+                    self.settings['STORAGE_SERVICE_UPDATE_URL'],
                     json={'url': link, 'category_name': category_name},
                 )
             except ConnectionError:
